@@ -1,0 +1,14 @@
+int smallest_missing = 1; // Initialize to the smallest positive integer
+    
+    for (int num : arr) {
+        // If the current number is greater than smallest_missing,
+        // we can't form smallest_missing with the previous numbers.
+        if (num > smallest_missing) {
+            break;
+        }
+        // If the current number is less than or equal to smallest_missing,
+        // we can form new sums, so we update smallest_missing.
+        smallest_missing += num;
+    }
+    
+    return smallest_missing;
