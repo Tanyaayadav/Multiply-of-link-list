@@ -1,0 +1,16 @@
+unordered_map<int, int> first_occurrence;  // To store the first occurrence of each element
+    int max_dist = 0;  // To store the maximum distance
+
+    for (int i = 0; i < arr.size(); i++) {
+        // If element has been seen before, calculate the distance
+        if (first_occurrence.find(arr[i]) != first_occurrence.end()) {
+            int dist = i - first_occurrence[arr[i]];
+            max_dist = max(max_dist, dist);  // Update the max distance if current distance is greater
+        }
+        // If it's the first time we've encountered this element, store the index
+        else {
+            first_occurrence[arr[i]] = i;
+        }
+    }
+    
+    return max_dist; 
