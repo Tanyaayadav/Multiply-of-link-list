@@ -1,0 +1,47 @@
+class Solution {
+  public:
+    int pairWithMaxSum(vector<int>& arr) {
+        // code here
+        
+        if (arr.size() < 2) {
+        return -1;
+    }
+    
+    int max_sum = -1; // Initialize to -1 as we need to return -1 if no valid subarray exists
+
+    // Iterate through the array
+    for (size_t i = 0; i < arr.size() - 1; ++i) {
+        // Find the sum of two adjacent elements
+        int sum_two = arr[i] + arr[i + 1];
+        // Update max_sum if this sum is greater than current max_sum
+        max_sum = max(max_sum, sum_two);
+    }
+
+    return max_sum;
+    }
+};
+
+//{ Driver Code Starts.
+
+int main() {
+    int tc;
+    cin >> tc;
+    cin.ignore();
+
+    while (tc--) {
+        string input;
+        getline(cin, input);
+
+        stringstream ss(input);
+        vector<int> a;
+        int number;
+        while (ss >> number) {
+            a.push_back(number);
+        }
+
+        Solution obj;
+        int res = obj.pairWithMaxSum(a);
+        cout << res << endl;
+    }
+}
+// } Dri
