@@ -1,0 +1,25 @@
+class Solution {
+  public:
+    void deleteAlt(struct Node *head) {
+        // Code here
+        
+        if (head == nullptr) return;  // If the list is empty, nothing to delete.
+
+    Node* current = head;
+    
+    while (current != nullptr && current->next != nullptr) {
+        // Get the node to be deleted (next node)
+        Node* temp = current->next;
+        
+        // Skip the next node
+        current->next = temp->next;
+        
+        // Free the memory of the deleted node
+        delete temp;
+        
+        // Move to the next node (i.e., the one after the deleted node)
+        current = current->next;
+    }
+    
+    }
+};
