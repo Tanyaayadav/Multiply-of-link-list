@@ -1,0 +1,21 @@
+unordered_map<int, int> prefixSumCount; // map to store cumulative sums and their frequency
+    int cumulativeSum = 0;
+    int subarrayCount = 0;
+
+    // Initializing the prefixSumCount with 0 sum (for cases where cumulative sum itself equals target)
+    prefixSumCount[0] = 1; // Base case: a cumulative sum of 0 at the beginning.
+
+    for (int num : arr) {
+        // Calculate the cumulative sum
+        cumulativeSum += num;
+
+        // Check if (cumulativeSum - target) exists in the map
+        if (prefixSumCount.find(cumulativeSum - tar) != prefixSumCount.end()) {
+            subarrayCount += prefixSumCount[cumulativeSum - tar];
+        }
+
+        // Update the count of the cumulative sum in the map
+        prefixSumCount[cumulativeSum]++;
+    }
+
+    return subarrayCount;
