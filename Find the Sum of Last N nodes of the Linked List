@@ -1,0 +1,29 @@
+if (!head) return 0;
+    
+    Node* temp = head;
+    int totalNodes = 0;
+
+    // First, find the total number of nodes in the list
+    while (temp) {
+        totalNodes++;
+        temp = temp->next;
+    }
+    
+    // Find the starting point of the last 'n' nodes
+    int start = totalNodes - n;
+    temp = head;
+    int sum = 0;
+
+    // Traverse to the start of the last 'n' nodes
+    while (start > 0) {
+        temp = temp->next;
+        start--;
+    }
+    
+    // Sum the last 'n' nodes
+    while (temp) {
+        sum += temp->data;
+        temp = temp->next;
+    }
+
+    return sum;
