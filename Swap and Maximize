@@ -1,0 +1,26 @@
+int n = arr.size();
+
+    // Step 1: Sort the array
+    sort(arr.begin(), arr.end());
+
+    // Step 2: Arrange elements in high-low alternating order
+    vector<int> shuffled;
+    int i = 0, j = n - 1;
+    while (i <= j) {
+        if (i == j) {
+            shuffled.push_back(arr[i]);  // For the middle element in case of odd count
+        } else {
+            shuffled.push_back(arr[i]);
+            shuffled.push_back(arr[j]);
+        }
+        i++;
+        j--;
+    }
+
+    // Step 3: Calculate the maximum sum of absolute differences in a circular manner
+    int maxSum = 0;
+    for (int k = 0; k < n; k++) {
+        maxSum += abs(shuffled[k] - shuffled[(k + 1) % n]);
+    }
+
+    return maxSum;
