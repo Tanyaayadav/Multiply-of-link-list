@@ -1,0 +1,23 @@
+int n = arr.size();
+
+    // Initialize the maximum and minimum products to the first element
+    int maxProduct = arr[0];
+    int minProduct = arr[0];
+    int result = arr[0];
+
+    // Traverse the array
+    for (int i = 1; i < n; ++i) {
+        // If current element is negative, swap maxProduct and minProduct
+        if (arr[i] < 0) {
+            swap(maxProduct, minProduct);
+        }
+
+        // Update maxProduct and minProduct
+        maxProduct = max(arr[i], maxProduct * arr[i]);
+        minProduct = min(arr[i], minProduct * arr[i]);
+
+        // Update the result
+        result = max(result, maxProduct);
+    }
+
+    return result;
