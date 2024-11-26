@@ -1,0 +1,24 @@
+int n = arr.size();
+
+    // Step 1: Kadane's Algorithm to find the maximum subarray sum (non-circular)
+    int max_kadane = INT_MIN, current_max = 0;
+    for (int i = 0; i < n; i++) {
+        current_max = max(arr[i], current_max + arr[i]);
+        max_kadane = max(max_kadane, current_max);
+    }
+
+    // Step 2: Total sum of the array and Kadane's for the minimum subarray sum
+    int total_sum = 0, min_kadane = INT_MAX, current_min = 0;
+    for (int i = 0; i < n; i++) {
+        total_sum += arr[i];
+        current_min = min(arr[i], current_min + arr[i]);
+        min_kadane = min(min_kadane, current_min);
+    }
+
+    // Step 3: Maximum sum of the circular subarray
+    // If all elements are negative, return max_kadane
+    if (total_sum == min_kadane) {
+        return max_kadane;
+    }
+
+    return max(max_kadane, total_sum - min_kadane);
