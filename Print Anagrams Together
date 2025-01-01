@@ -1,0 +1,17 @@
+from collections import defaultdict
+
+class Solution:
+    def anagrams(self, arr):
+        # Group words by their sorted string
+        anagram_groups = defaultdict(list)
+
+        for word in arr:
+            sorted_word = ''.join(sorted(word))
+            anagram_groups[sorted_word].append(word)
+
+        # Collect and sort groups
+        result = []
+        for group in anagram_groups.values():
+            result.append(group)  # Sort each group lexicographically
+
+        return result
