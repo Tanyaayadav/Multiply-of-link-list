@@ -1,0 +1,34 @@
+class Solution {
+  public:
+    int minJumps(vector<int>& arr) {
+        // code here
+        
+        int n = arr.size();
+        
+        // If the array has only one element or the first element is zero
+        if (n == 1) return 0;
+        if (arr[0] == 0) return -1;
+
+        int jumps = 0;
+        int currentEnd = 0;
+        int farthest = 0;
+        
+        for (int i = 0; i < n; ++i) {
+            farthest = max(farthest, i + arr[i]);
+            
+            // If we reach the currentEnd, we need to make a jump
+            if (i == currentEnd) {
+                jumps++;
+                currentEnd = farthest;
+                
+                // If we have reached or passed the last index, return the jumps
+                if (currentEnd >= n - 1) return jumps;
+            }
+        }
+        
+        // If we finish the loop without reaching the end, return -1
+        return -1;
+        
+    }
+};
+
