@@ -1,0 +1,34 @@
+class Solution {
+  public:
+    int matrixMultiplication(vector<int> &arr) {
+        // code here
+        
+        int n = arr.size();
+        
+        // Initialize dp table with -1 (meaning not yet calculated)
+        vector<vector<int>> dp(n, vector<int>(n, -1));
+        
+        // Helper function for memoization
+        return solve(arr, 1, n - 1, dp);
+    }
+    
+    int solve(vector<int> &arr, int i, int j, vector<vector<int>> &dp) {
+        if (i == j) return 0; // Single matrix, no multiplication needed
+        
+        if (dp[i][j] != -1) return dp[i][j]; // Return memoized result
+        
+        int minCost = INT_MAX;
+        
+        for (int k = i; k < j; k++) {
+            // Calculate cost of multiplying matrices from i to k and k+1 to j
+            int cost = solve(arr, i, k, dp) + solve(arr, k + 1, j, dp) + arr[i - 1] * arr[k] * arr[j];
+            
+            // Store the minimum cost
+            minCost = min(minCost, cost);
+        }
+        
+        // Memoize the result
+        return dp[i][j] = minCost;
+        
+    }
+};
