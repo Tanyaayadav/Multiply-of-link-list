@@ -1,0 +1,48 @@
+// User function Template for C++
+class Solution {
+  public:
+        // code here
+        
+         unordered_map<string, long long> dp;
+    
+    long long countWaysUtil(string &s, int i, int j, bool isTrue) {
+        if (i > j) return 0;
+        if (i == j) {  // Base case: Single character
+            if (isTrue) return s[i] == 'T';
+            else return s[i] == 'F';
+        }
+        
+        // Memoization key
+        string key = to_string(i) + "_" + to_string(j) + "_" + to_string(isTrue);
+        if (dp.find(key) != dp.end()) return dp[key];
+        
+        long long ways = 0;
+        for (int k = i + 1; k < j; k += 2) {  // Operators are at odd indices
+            long long leftTrue = countWaysUtil(s, i, k - 1, true);
+            long long leftFalse = countWaysUtil(s, i, k - 1, false);
+            long long rightTrue = countWaysUtil(s, k + 1, j, true);
+            long long rightFalse = countWaysUtil(s, k + 1, j, false);
+
+            if (s[k] == '&') {
+                if (isTrue) ways += leftTrue * rightTrue;
+                else ways += leftFalse * rightFalse + leftTrue * rightFalse + leftFalse * rightTrue;
+            } 
+            else if (s[k] == '|') {
+                if (isTrue) ways += leftTrue * rightTrue + leftTrue * rightFalse + leftFalse * rightTrue;
+                else ways += leftFalse * rightFalse;
+            } 
+            else if (s[k] == '^') {
+                if (isTrue) ways += leftTrue * rightFalse + leftFalse * rightTrue;
+                else ways += leftTrue * rightTrue + leftFalse * rightFalse;
+            }
+        }
+        
+        return dp[key] = ways;
+    }
+    
+    int countWays(string &s) {
+        dp.clear();
+        return countWaysUtil(s, 0, s.size() - 1, true);
+        
+    }
+};
