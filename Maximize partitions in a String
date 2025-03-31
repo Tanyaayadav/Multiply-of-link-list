@@ -1,0 +1,29 @@
+class Solution {
+  public:
+    int maxPartitions(string &s) {
+        // code here
+        
+         unordered_map<char, int> lastIndex;
+        
+        // Step 1: Store last occurrence of each character
+        for (int i = 0; i < s.size(); i++) {
+            lastIndex[s[i]] = i;
+        }
+        
+        int partitions = 0;
+        int maxLastIndex = 0;
+        
+        // Step 2: Traverse and count partitions
+        for (int i = 0; i < s.size(); i++) {
+            maxLastIndex = max(maxLastIndex, lastIndex[s[i]]);
+            
+            // When reaching maxLastIndex, create a partition
+            if (i == maxLastIndex) {
+                partitions++;
+            }
+        }
+        
+        return partitions;
+        
+    }
+};
