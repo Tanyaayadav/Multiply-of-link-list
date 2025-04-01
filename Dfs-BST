@@ -1,0 +1,23 @@
+void dfsHelper(int node, vector<vector<int>>& adj, vector<bool>& visited, vector<int>& result) {
+        visited[node] = true;
+        result.push_back(node);
+        
+        for (int neighbor : adj[node]) {
+            if (!visited[neighbor]) {
+                dfsHelper(neighbor, adj, visited, result);
+            }
+        }
+    }
+
+    // Main DFS function
+    vector<int> dfs(vector<vector<int>>& adj) {
+        int V = adj.size();
+        vector<bool> visited(V, false);
+        vector<int> result;
+        
+        for (int i = 0; i < V; i++) {
+            if (!visited[i]) {
+                dfsHelper(i, adj, visited, result);
+            }
+        }
+        return result;
