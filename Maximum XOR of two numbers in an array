@@ -1,0 +1,52 @@
+class Solution {
+  public:
+    // Trie Node structure
+    struct TrieNode {
+        TrieNode* children[2];
+        TrieNode() {
+            children[0] = children[1] = nullptr;
+        }
+    };
+    
+    // Insert a number into the Trie
+    void insert(TrieNode* root, int num) {
+        TrieNode* curr = root;
+        for (int i = 20; i >= 0; i--) {
+            int bit = (num >> i) & 1;
+            if (!curr->children[bit]) {
+                curr->children[bit] = new TrieNode();
+            }
+            curr = curr->children[bit];
+        }
+    }
+    
+    // Query the maximum XOR for a number
+    int getMaxXor(TrieNode* root, int num) {
+        TrieNode* curr = root;
+        int maxXor = 0;
+        for (int i = 20; i >= 0; i--) {
+            int bit = (num >> i) & 1;
+            // Prefer opposite bit to maximize XOR
+            if (curr->children[1 - bit]) {
+                maxXor |= (1 << i);
+                curr = curr->children[1 - bit];
+            } else {
+                curr = curr->children[bit];
+            }
+        }
+        return maxXor;
+    }
+    
+    int maxXor(vector<int> &arr) {
+        TrieNode* root = new TrieNode();
+        int result = 0;
+        
+        // Insert all numbers into the Trie and query max XOR
+        for (int num : arr) {
+            insert(root, num);
+            result = max(result, getMaxXor(root, num));
+        }
+        
+        return result;
+    }
+};
