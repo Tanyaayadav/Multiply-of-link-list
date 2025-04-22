@@ -1,0 +1,10 @@
+class Solution {
+  public:
+    int findUnique(vector<int> &arr) {
+        int result = 0;
+        for (int num : arr) {
+            result ^= num;  // XOR all elements
+        }
+        return result;  // The unique number will remain
+    }
+};
