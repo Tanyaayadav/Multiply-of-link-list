@@ -1,0 +1,33 @@
+class Solution {
+  public:
+    // Function to count total number of nodes
+    int countNodes(Node* root) {
+        if (!root) return 0;
+        return 1 + countNodes(root->left) + countNodes(root->right);
+    }
+    
+    // Function to check if the tree is complete and satisfies max-heap property
+    bool isHeapUtil(Node* root, int index, int totalNodes) {
+        if (!root)
+            return true;
+        
+        // Check completeness: index should be less than totalNodes
+        if (index >= totalNodes)
+            return false;
+        
+        // Check max-heap property
+        if (root->left && root->data < root->left->data)
+            return false;
+        if (root->right && root->data < root->right->data)
+            return false;
+        
+        // Recursively check left and right subtree
+        return isHeapUtil(root->left, 2 * index + 1, totalNodes) &&
+               isHeapUtil(root->right, 2 * index + 2, totalNodes);
+    }
+
+    bool isHeap(Node* tree) {
+        int totalNodes = countNodes(tree);
+        return isHeapUtil(tree, 0, totalNodes);
+    }
+};
