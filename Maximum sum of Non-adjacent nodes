@@ -1,0 +1,25 @@
+class Solution {
+  public:
+    // Helper function
+    pair<int, int> solve(Node* root) {
+        if (!root)
+            return {0, 0};
+        
+        // Solve left and right subtrees
+        pair<int, int> left = solve(root->left);
+        pair<int, int> right = solve(root->right);
+        
+        // If we include current node, we cannot include its children
+        int include = root->data + left.second + right.second;
+        
+        // If we exclude current node, we can take max(include, exclude) of children
+        int exclude = max(left.first, left.second) + max(right.first, right.second);
+        
+        return {include, exclude};
+    }
+    
+    int getMaxSum(Node* root) {
+        pair<int, int> ans = solve(root);
+        return max(ans.first, ans.second);
+    }
+};
