@@ -1,0 +1,29 @@
+class Solution {
+  public:
+    int countNodesinLoop(Node *head) {
+        Node *slow = head, *fast = head;
+        
+        while (fast && fast->next) {
+            slow = slow->next;
+            fast = fast->next->next;
+            
+            if (slow == fast) {
+                // Loop detected
+                return countLoopLength(slow);
+            }
+        }
+        
+        return 0; // No loop
+    }
+
+  private:
+    int countLoopLength(Node *nodeInLoop) {
+        Node *temp = nodeInLoop;
+        int count = 1;
+        while (temp->next != nodeInLoop) {
+            count++;
+            temp = temp->next;
+        }
+        return count;
+    }
+};
