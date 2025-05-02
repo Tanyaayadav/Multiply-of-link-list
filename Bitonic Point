@@ -1,0 +1,26 @@
+class Solution {
+  public:
+    int findMaximum(vector<int> &arr) {
+        int low = 0, high = arr.size() - 1;
+
+        while (low <= high) {
+            int mid = low + (high - low) / 2;
+
+            // Handle edge cases at bounds
+            if ((mid == 0 || arr[mid] > arr[mid - 1]) && 
+                (mid == arr.size() - 1 || arr[mid] > arr[mid + 1])) {
+                return arr[mid];
+            }
+            // Move to the right half
+            else if (mid < arr.size() - 1 && arr[mid] < arr[mid + 1]) {
+                low = mid + 1;
+            }
+            // Move to the left half
+            else {
+                high = mid - 1;
+            }
+        }
+
+        return -1; // This line will never be reached as per problem constraints
+    }
+};
