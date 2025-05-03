@@ -1,0 +1,39 @@
+class Solution {
+public:
+    const int MAX = 100100;
+    vector<bool> isPrime;
+
+    Solution() {
+        isPrime.resize(MAX, true);
+        isPrime[0] = isPrime[1] = false;
+        for (int i = 2; i * i < MAX; i++) {
+            if (isPrime[i]) {
+                for (int j = i * i; j < MAX; j += i)
+                    isPrime[j] = false;
+            }
+        }
+    }
+
+    int getNearestPrime(int num) {
+        if (isPrime[num]) return num;
+
+        int left = num - 1;
+        int right = num + 1;
+
+        while (true) {
+            if (left >= 2 && isPrime[left]) return left;
+            if (right < MAX && isPrime[right]) return right;
+            left--;
+            right++;
+        }
+    }
+
+    Node* primeList(Node* head) {
+        Node* temp = head;
+        while (temp != NULL) {
+            temp->val = getNearestPrime(temp->val);
+            temp = temp->next;
+        }
+        return head;
+    }
+};
