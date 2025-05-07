@@ -1,0 +1,28 @@
+class Solution {
+  public:
+    void dfs(Node* root, vector<int>& path, vector<vector<int>>& result) {
+        if (!root) return;
+
+        // Add current node to path
+        path.push_back(root->data);
+
+        // If it's a leaf node, add the path to result
+        if (!root->left && !root->right) {
+            result.push_back(path);
+        } else {
+            // Otherwise, explore left and right subtrees
+            dfs(root->left, path, result);
+            dfs(root->right, path, result);
+        }
+
+        // Backtrack
+        path.pop_back();
+    }
+
+    vector<vector<int>> Paths(Node* root) {
+        vector<vector<int>> result;
+        vector<int> path;
+        dfs(root, path, result);
+        return result;
+    }
+};
