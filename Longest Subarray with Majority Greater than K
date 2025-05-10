@@ -1,0 +1,33 @@
+class Solution {
+  public:
+    int longestSubarray(vector<int> &arr, int k) {
+        int n = arr.size();
+        vector<int> temp(n);
+        
+        // Step 1: Convert elements to 1 and -1
+        for (int i = 0; i < n; ++i) {
+            temp[i] = (arr[i] > k) ? 1 : -1;
+        }
+
+        unordered_map<int, int> first_occurrence;
+        int prefix_sum = 0, max_len = 0;
+
+        for (int i = 0; i < n; ++i) {
+            prefix_sum += temp[i];
+
+            if (prefix_sum > 0) {
+                max_len = i + 1;
+            } else {
+                if (first_occurrence.find(prefix_sum - 1) != first_occurrence.end()) {
+                    max_len = max(max_len, i - first_occurrence[prefix_sum - 1]);
+                }
+            }
+
+            if (first_occurrence.find(prefix_sum) == first_occurrence.end()) {
+                first_occurrence[prefix_sum] = i;
+            }
+        }
+
+        return max_len;
+    }
+};
