@@ -1,0 +1,44 @@
+class Solution {
+public:
+    vector<int> findSmallestRange(vector<vector<int>>& arr) {
+        int k = arr.size();
+        int n = arr[0].size();
+
+        // Min heap: {value, row_index, column_index}
+        priority_queue<vector<int>, vector<vector<int>>, greater<vector<int>>> minHeap;
+
+        int currentMax = INT_MIN;
+        for (int i = 0; i < k; ++i) {
+            minHeap.push({arr[i][0], i, 0});
+            currentMax = max(currentMax, arr[i][0]);
+        }
+
+        int rangeStart = 0, rangeEnd = INT_MAX;
+
+        while (true) {
+            auto top = minHeap.top();
+            minHeap.pop();
+            int val = top[0];
+            int row = top[1];
+            int col = top[2];
+
+            // Update the smallest range
+            if (currentMax - val < rangeEnd - rangeStart) {
+                rangeStart = val;
+                rangeEnd = currentMax;
+            }
+
+            // Move to the next element in the same row
+            if (col + 1 < arr[row].size()) {
+                int nextVal = arr[row][col + 1];
+                minHeap.push({nextVal, row, col + 1});
+                currentMax = max(currentMax, nextVal);
+            } else {
+                // One of the lists is exhausted
+                break;
+            }
+        }
+
+        return {rangeStart, rangeEnd};
+    }
+};
