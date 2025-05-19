@@ -1,0 +1,39 @@
+class Solution {
+  public:
+    vector<Node*> findPreSuc(Node* root, int key) {
+        Node* pre = nullptr;
+        Node* suc = nullptr;
+        
+        // Step 1: Search for the key and track potential predecessor and successor
+        Node* curr = root;
+        while (curr) {
+            if (curr->data < key) {
+                pre = curr; // potential predecessor
+                curr = curr->right;
+            } else if (curr->data > key) {
+                suc = curr; // potential successor
+                curr = curr->left;
+            } else {
+                // Key found, now find actual predecessor and successor in subtrees
+                // Predecessor: rightmost node in left subtree
+                if (curr->left) {
+                    Node* temp = curr->left;
+                    while (temp->right)
+                        temp = temp->right;
+                    pre = temp;
+                }
+
+                // Successor: leftmost node in right subtree
+                if (curr->right) {
+                    Node* temp = curr->right;
+                    while (temp->left)
+                        temp = temp->left;
+                    suc = temp;
+                }
+                break;
+            }
+        }
+
+        return {pre, suc};
+    }
+};
